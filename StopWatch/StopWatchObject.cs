@@ -4,40 +4,40 @@ namespace StopWatch
 {
 	internal class StopWatchObject
 	{
-		public bool Started { get; private set; }
+		private bool _started;
 		private DateTime _start;
 		private DateTime _stop;
 
 		public void Start()
 		{
-			if (!Started)
+			if (!_started)
 			{
 				_start = DateTime.Now;
-				Started = true;
+				_started = true;
 			}
 		}
 
 		public void Stop()
 		{
-			if (Started)
+			if (_started)
 			{
 				_stop = DateTime.Now;
-				Started = false;
+				_started = false;
 			}
 		}
 
 		public void Continue()
 		{
-			if (!Started)
+			if (!_started)
 			{
 				_start = DateTime.Now.Subtract(_stop - _start);
-				Started = true;
+				_started = true;
 			}
 		}
 
 		public void Reset()
 		{
-			if (!Started)
+			if (!_started)
 			{
 				_start = DateTime.MinValue;
 				_stop = DateTime.MinValue;
@@ -47,7 +47,7 @@ namespace StopWatch
 		private TimeSpan CalculateDelta()
 		{
 			TimeSpan delta;
-			if (Started)
+			if (_started)
 				delta = DateTime.Now - _start;
 			else
 				delta = _stop - _start;
